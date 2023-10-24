@@ -10,6 +10,8 @@
         public DateTime? MemberSince { get; set; } = DateTime.Now;
         public string ImageUrl { get; set; }
         public List <Meetup> Meetups { get; set; }
-        public int Uid { get; set; }
+        public string Uid { get; set; }
+        public int OrganizationId { get; set; }
+        public Organization Organization { get; set; }
     }
 }

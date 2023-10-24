@@ -11,6 +11,8 @@
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public List <Member> Members { get; set; }
         public int Attending => Members.Count;
+        public int OrganizationId { get; set; }
+        public Organization Organization { get; set; }
 
     }
 }

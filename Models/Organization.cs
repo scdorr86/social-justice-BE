@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime? Created_at { get; set; } = default(DateTime?);
+        public DateTime? Created_at { get; set; } = DateTime.Now;
         public List <Member> Members { get; set; }
         public List <Meetup> Meetups { get; set;}
         public int MemberCount => Members.Count;

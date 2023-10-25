@@ -5,13 +5,8 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? Created_at { get; set; } = DateTime.Now;
-<<<<<<< HEAD
         public List <Member> Members { get; set; } = new List<Member> ();
         public List <Meetup> Meetups { get; set;} = new List<Meetup> ();
-=======
-        public List<Member> Members { get; set; } = new List<Member>();
-        public List<Meetup> Meetups { get; set; } = new List<Meetup>();
->>>>>>> main
         public int MemberCount => Members.Count;
         public int MeetupCount => Meetups.Count;
         public string Mission { get; set; }

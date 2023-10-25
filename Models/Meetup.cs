@@ -9,7 +9,7 @@
         public DateTime MeetTime { get; set; } = default(DateTime);
         public string Location { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public List <Member> Members { get; set; }
+        public List <Member> Members { get; set; } = new List<Member>();
         public int Attending => Members.Count;
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }

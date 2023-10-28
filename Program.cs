@@ -146,7 +146,7 @@ app.MapGet("/meetups/{id}", (socialJusticeDbContext db, int id) =>
     return db.Meetups.Where(m => m.Id == id)
                    .Include(m => m.Members)
                    .Include(m => m.Organization)
-                   .ToList();
+                   .FirstOrDefault();
 });
 
 // Delete Meetup by id
@@ -165,7 +165,9 @@ app.MapDelete("/meetups/{id}", (socialJusticeDbContext db, int id) =>
 // Update Meetup by id
 app.MapPut("/updateMeetup/{id}", (socialJusticeDbContext db, int id, Meetup meetup) =>
 {
-    Meetup meetupToUpdate = db.Meetups.SingleOrDefault(m => m.Id == id);
+    Meetup meetupToUpdate = db.Meetups.Include(m => m.Members)
+                                      .Include(m => m.Organization)
+                                      .SingleOrDefault(m => m.Id == id);
     if (meetupToUpdate == null)
     {
         return Results.NotFound();
@@ -173,6 +175,7 @@ app.MapPut("/updateMeetup/{id}", (socialJusticeDbContext db, int id, Meetup meet
 
     meetupToUpdate.Title = meetup.Title;
     meetupToUpdate.Description = meetup.Description;
+    meetupToUpdate.ImageUrl = meetup.ImageUrl;
     meetupToUpdate.MeetTime = meetup.MeetTime;
     meetupToUpdate.Location = meetup.Location;
     meetupToUpdate.OrganizationId = meetup.OrganizationId;
@@ -225,6 +228,25 @@ app.MapDelete("/meetup/{meetupId}/removemember/{memberId}", (socialJusticeDbCont
     meetup?.Members?.Remove(memberToDelete);
     db.SaveChanges();
     return Results.Ok(meetup);
+});
+
+// ORGANIZATION FETCHES:
+
+//Get All Orgs (for stretch):
+app.MapGet("/organizations", (socialJusticeDbContext db) =>
+{
+    return db.Organizations.Include(o => o.Members)
+                   .Include(o => o.Meetups)
+                   .ToList();
+});
+
+// Get Org by Id (for FE main org display properties
+app.MapGet("/organization/{id}", (socialJusticeDbContext db, int id) =>
+{
+    return db.Organizations.Where(o => o.Id == id)
+                   .Include(o => o.Members)
+                   .Include(o => o.Meetups)
+                   .FirstOrDefault();
 });
 
 app.Run();

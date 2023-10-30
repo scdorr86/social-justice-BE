@@ -104,7 +104,7 @@ app.MapDelete("/members/{id}", (socialJusticeDbContext db, int id) =>
 //USER APIs
 app.MapGet("/checkuser/{uid}", (socialJusticeDbContext db, string uid) =>
 {
-    var userExist = db.Members.Where(member => member.Uid == uid).ToList();
+    var userExist = db.Members.Where(member => member.Uid == uid).FirstOrDefault();
     if (userExist == null)
     {
         return Results.NotFound();

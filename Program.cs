@@ -107,7 +107,7 @@ app.MapGet("/checkuser/{uid}", (socialJusticeDbContext db, string uid) =>
     var userExist = db.Members.Where(member => member.Uid == uid).FirstOrDefault();
     if (userExist == null)
     {
-        return Results.Ok("User is not a member");
+        return Results.BadRequest("User is not a member");
     }
     return Results.Ok(userExist);
 });
